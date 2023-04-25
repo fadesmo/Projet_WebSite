@@ -5,13 +5,15 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
 #[ORM\Table(name: 'i23_users')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+#[UniqueEntity(fields: ['login'], message: 'Ce Login est déjà utilisé')]
+class User implements MyUserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,19 +32,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::STRING,length: 200)]
+    #[ORM\Column(type: Types::STRING,length: 200, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column(type: Types::STRING,length: 200)]
+    #[ORM\Column(type: Types::STRING,length: 200, nullable: true)]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateNaissance = null;
 
 
 
     #[ORM\Column]
-    private ?int $userID = null; // 0 : client ; 1 : admin ; 2 : Super-Admin
+    private ?int $userID = null; // 2 : client ; 1 : admin ; 0 : Super-Admin
 
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -82,7 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_NOROLE';
 
         return array_unique($roles);
     }
@@ -147,9 +149,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->dateNaissance;
     }
 
-    public function setDateNaissance(\DateTimeInterface $dateNaissance): self
+    public function setDateNaissance(\DateTimeInterface $dateNaissance = null): self
     {
-        $this->dateNaissance = $dateNaissance;
+        $this->dateNaissance = $dateNaissance ;
 
         return $this;
     }

@@ -1,0 +1,44 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}{{ parent() }} : produits{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : liste des produits{% endblock %}
+
+{% block vue %}
+    <p><a href="{{ path('produit_add') }}" style="color: #FFFFFF">ajouter un produit</a></p>
+
+    {% if produits|length == 0 %}
+        <p>Aucun produit dans la base de données</p>
+    {% else %}
+        <table class="produit-table">
+            <tr><th>Libelle</th><th></th></tr>
+            {% for produit in produits %}
+                {% set urlView = path('produit_view', {'id' : produit.id}) %}
+                {% set urlDelete = path('produit_delete', {'id' : produit.id}) %}
+                <tr>
+                    <td>
+                        <p>{{ produit.id }} {{ produit.libelle }}</p>
+                    </td>
+                        {{ render(controller('App\\Controller\\PanierController::formviewAction', { "id" : app.user.id , "id_produit" : produit.id } )) }}
+                    <td>
+                        <button type="submit" >ENVOYER</button>
+                    </td>
+                    <td>
+                        <a href="{{ urlView }}" style="color: black">View</a>
+                    </td>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td>
+                            <a href="{{ urlDelete }}" style="color: #FFFFFF">Delete</a>
+                        </td>
+                    {% endif %}
+
+                </tr>
+
+            {% endfor %}
+        </table>
+
+    {% endif %}
+
+    {{ dump(produits) }}
+{% endblock %}

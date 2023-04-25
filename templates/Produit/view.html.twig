@@ -1,0 +1,33 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}{{ parent() }} : produits{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : détail du produit {{ produit.id }}{% endblock %}
+
+{% block vue %}
+    {# normalement devrait être dans un fichier css #}
+    <style>
+        caption { border: red solid 1px; }
+        table { border: black solid 1px; }
+        th, td { border: black solid 1px; padding: 2px 10px 2px 10px;}
+        th { text-align: left; }
+    </style>
+
+    <p><a href="{{ path('produit_list') }}">vers la liste des produits</a></p>
+
+    <h2>Détail du produit</h2>
+    {# le produit existe : le cas d'erreur a été traité dans le contrôleur #}
+    <ul>
+        <li>id : {{ produit.id }}</li>
+        <li>libelle : {{ produit.libelle }}</li>
+        <li>prix unitaire : {{ produit.prixUnitaire }} euros</li>
+        <li>quantite : {{ produit.quantite }}</li>
+    </ul>
+    {% if is_granted('ROLE_ADMIN') %}
+    <form action="{{ path('produit_edit', {'id': produit.id}) }}">
+        <input type="submit" value="Modifier le produit"/>
+    </form>
+    {% endif %}
+    <h2>dump de vérification</h2>
+    {{ dump(produit) }}
+{% endblock %}

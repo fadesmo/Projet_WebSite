@@ -1,10 +1,10 @@
 {# affichage des messages flash #}
 
 {% if app.session.flashBag.has('info') %}
-    <strong>Messages d'information</strong>
+    <strong style="color: #FFFFFF">Messages d'information</strong>
     <ul>
         {% for msg in app.session.flashBag.get('info') %}
-            <li>{{ msg }}</li>
+            <li style="color: #FFFFFF">{{ msg }}</li>
         {% endfor %}
     </ul>
 {% endif %}

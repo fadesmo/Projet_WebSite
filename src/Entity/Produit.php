@@ -38,10 +38,9 @@ class Produit
         minMessage: 'la quantité minimale est {{ limit }}',
         min: 0,
     )]
-    private ?int $quantiteStock = null;
+    private ?int $quantite = null;
 
-    #[ORM\OneToMany(mappedBy: 'Produit', targetEntity: PanierProduit::class)]
-    #[Assert\Valid]
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PanierProduit::class)]
     private Collection $panierProduits;
 
     public function __construct()
@@ -80,12 +79,12 @@ class Produit
 
     public function getQuantite(): ?int
     {
-        return $this->quantiteStock;
+        return $this->quantite;
     }
 
     public function setQuantite(int $quantite): self
     {
-        $this->quantiteStock = $quantite;
+        $this->quantite = $quantite;
 
         return $this;
     }

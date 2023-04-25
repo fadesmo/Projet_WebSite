@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
-        {% block css %}{% endblock %}
+        {% block css %}<link rel="stylesheet" href="{{ asset('css/Stylesheet.css') }}">
+        {% endblock %}
         {% block javascript %}{% endblock %}
     </head>
     <body>

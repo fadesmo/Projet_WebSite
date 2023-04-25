@@ -1,0 +1,64 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}{{ parent() }} : paniers{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : Votre Panier{% endblock %}
+
+{% block vue %}
+    <h1> Le Panier de {{ app.user.userIdentifier}} : </h1>
+
+    {% if produits|length == 0 %}
+    <p> Aucun produit dans le panier </p>
+    {% else %}
+    <table class="mon-panier">
+        {% set total = 0 %}
+        <tr><th>Panier</th><th>Quantiter</th><th>Prix Unitaire</th><th>Prix total</th></tr>
+        {% for produit in produits %}
+        <tr>
+            <td>
+                <p>{{ produit.produit.libelle }}</p>
+            </td>
+            <td>
+                <p>{{ produit.quantite }}</p>
+            </td>
+            <td>
+                <p>{{ produit.produit.prixUnitaire }} euros</p>
+            </td>
+            <td>
+                <p>{{ produit.prix }} euros</p>
+            </td>
+            <td>
+                <form action="{{ path('panier_supprimer', { 'userid' : app.user.id ,'id': produit.id }) }}">
+                    <input type="submit" value="Supprimer"/>
+                </form>
+            </td>
+        </tr>
+            {% set total = total + produit.prix %}
+        {% endfor %}
+
+
+    </table>
+        <table>
+            <tr></tr>
+            <td>
+                MONTANT TOTAL
+            </td>
+            <td>
+                {{ total }} euros
+            </td>
+        </table>
+        <table>
+            <tr></tr>
+            <td>
+                <form action="{{ path('panier_payer') }}" >
+                    <input type="submit" value="ACHETER"/>
+                </form>
+            </td>
+            <td>
+                <form action="{{ path('panier_vider', {'id': app.user.id}) }}" >
+                    <input type="submit" value="VIDER"/>
+                </form>
+            </td>
+        </table>
+{% endif %}
+{% endblock %}

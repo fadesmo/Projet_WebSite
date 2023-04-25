@@ -1,6 +1,15 @@
 {# entête du site #}
-<h1>VOUS ÊTES UN SUPER ADMIN </h1>
-<p>Entête : bandeau d'accueil</p>
-<p>!</p>
-<p>!</p>
-<p>!</p>
+{% if app.user %}
+    <div class="info-log">
+        {% if app.user.nom %}
+        <h1>Bienvenue {{ app.user.prenom }}</h1>
+        {% endif %}
+        <p>Vous êtes connecté avec : {{ app.user.userIdentifier }}</p>
+        <p>Votre ID : {{ app.user.id }}</p>
+        <p>Votre Role : {% include 'Layouts/roles.html.twig' %}</p>
+    </div>
+    {% else %}
+    <h1>Utilisateur Anonyme</h1>
+{% endif %}
+
+

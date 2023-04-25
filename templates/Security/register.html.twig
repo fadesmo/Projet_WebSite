@@ -1,0 +1,19 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}Creation de Compte!{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : Création de compte{% endblock %}
+
+{% block vue %}
+    <h1>Creation de Compte</h1>
+
+    {{ form_start(Form) }}
+        {{ form_row(Form.login) }}
+        {{ form_row(Form.nom)  }}
+        {{ form_row(Form.prenom) }}
+        {{ form_row(Form.dateNaissance) }}
+        {{ form_row(Form.password , { label: 'Mot De Passe' }) }}
+
+        <button type="submit" class="btn">Créer</button>
+    {{ form_end(Form) }}
+{% endblock %}

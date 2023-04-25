@@ -1,0 +1,3 @@
+{{ render(controller('App\\Controller\\PanierController::panierlistAction', { "id" : app.user.id } )) }}
+
+{# On utilise un redirect ici pour eviter d'afficher l'id dans le URL #}

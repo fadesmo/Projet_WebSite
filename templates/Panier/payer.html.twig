@@ -1,0 +1,14 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}{{ parent() }} : Achat{% endblock %}
+
+{% block titre_principal %} Merci pour votre Achat {% endblock %}
+
+{% block vue %}
+    <!-- possibilité de gérer un historique de paiement mais on voulais pas le mentionner ici -->
+    <p> Acheter d'autres Articles : </p>
+    <form action="{{ path('produit_list', {'postId': 0}) }}" >
+        <input type="submit" value="Cliquer ICI"/>
+    </form>
+
+{% endblock %}

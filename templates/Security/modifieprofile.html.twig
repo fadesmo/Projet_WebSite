@@ -1,0 +1,19 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}Modification de Compte!{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : Modification compte{% endblock %}
+
+{% block vue %}
+    <h1>Modification de Compte</h1>
+
+    {{ form_start(Form) }}
+    {{ form_row(Form.login) }}
+    {{ form_row(Form.nom)  }}
+    {{ form_row(Form.prenom) }}
+    {{ form_row(Form.dateNaissance) }}
+    {{ form_row(Form.password , { label: 'Nouveau Mot De Passe' }) }}
+
+    <button type="submit" class="btn">Modifier</button>
+    {{ form_end(Form) }}
+{% endblock %}

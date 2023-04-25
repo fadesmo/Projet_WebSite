@@ -1,0 +1,19 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}Ajout de compte Admin{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : Ajout de compte ADMIN{% endblock %}
+
+{% block vue %}
+    <h1>Ajout d'un Admin</h1>
+
+    {{ form_start(Form) }}
+    {{ form_row(Form.login) }}
+    {{ form_row(Form.nom , {'required': false })  }}
+    {{ form_row(Form.prenom , {'required': false }) }}
+    {{ form_row(Form.dateNaissance , {'required': false }) }}
+    {{ form_row(Form.password , { label: 'Mot De Passe' }) }}
+
+    <button type="submit" class="btn">Créer</button>
+    {{ form_end(Form) }}
+{% endblock %}

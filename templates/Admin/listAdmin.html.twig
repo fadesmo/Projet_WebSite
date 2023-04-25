@@ -1,0 +1,53 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}{{ parent() }} : Clients{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : liste des clients{% endblock %}
+
+{% block vue %}
+    <table>
+     <tr>
+         <td>
+    <form action="{{ path('store_add_admin') }}" >
+        <input type="submit" value="AJOUTER UN ADMIN">
+    </form>
+         </td>
+     </tr>
+    </table>
+    {% if users|length == 0 %}
+        <p>Aucun Client dans la base de données</p>
+    {% else %}
+        <table class="produit-table">
+            <tr><th>ID</th><th>Login</th><th>Nom</th><th>Prenom</th><th>Date Naissance</th><th>Panier</th></tr>
+            {% for user in users %}
+                    <tr>
+                        <td>
+                            <p> {{ user.id }}</p>
+                        </td>
+                        <td>
+                            <p> {{ user.login }}</p>
+                        </td>
+                        <td>
+                            <p> {{ user.nom is null ? 'null' : user.nom }}</p>
+                        </td>
+                        <td>
+                            <p> {{ user.prenom is null ? 'null' : user.prenom }}</p>
+                        </td>
+                        <td>
+                            <p> {{ user.dateNaissance is null ? 'null' : user.dateNaissance|date('d-m-Y') }}</p>
+                        </td>
+                        <td>
+                            <p> {{ user.panier is null ? 'null' : user.panier.id }}</p>
+                        </td>
+                        <td>
+                            <form action="{{ path('store_supprimer_admin', {'id': user.id}) }}">
+                                <input type="submit" value="Supprimer"/>
+                            </form>
+
+                        </td>
+                    </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}{{ parent() }} : produits{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : liste des produits{% endblock %}
+
+{% block vue %}
+
+    {% if produits|length == 0 %}
+        <p>Aucun produit dans la base de données</p>
+    {% else %}
+        <table class="produit-table">
+            <tr><th>ID</th><th>Libellé</th><th>Prix</th><th>Stock</th><th>Choix</th><th>Action</th></tr>
+            {% for produit in produits %}
+                {% set urlView = path('produit_view', {'id' : produit.id}) %}
+                {% set urlDelete = path('produit_delete', {'id' : produit.id}) %}
+
+                <tr>
+                    <td>
+                        <p>{{ produit.id }}</p>
+                    </td>
+                    <td>
+                        <p>{{ produit.libelle }}</p>
+                    </td>
+                    <td>
+                        <p>{{ produit.prixUnitaire }} Euros</p>
+                    </td>
+                    <td>
+                        <p>{{ produit.quantite }}</p>
+                    </td>
+
+                    <td>
+                        <!-- Verification soit on a une quantité soit y'a du stock dans la base -->
+                            {% if (mins[produit.id] > 0) or (maxs[produit.id] > 0 )  %}
+                            {{ form_start(forms[produit.id],{'action': path('produit_list', {'postId': produit.id })} ) }}
+                            {{ form_widget(forms[produit.id].choix,{ 'attr' :{'id': 'widget_' ~ produit.id}, 'name': 'widget_' ~ produit.id} ) }}
+                            {% endif %}
+                   </td>
+
+                    <td>
+                            {% if (mins[produit.id] > 0) or (maxs[produit.id] > 0 )  %}
+                            {{ form_end(forms[produit.id]) }}
+                            {% endif %}
+                    </td>
+
+                    <td>
+                        <form action="{{ urlView }}">
+                            <input type="submit" value="Details">
+                        </form>
+
+                    </td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <form action="{{ urlDelete }}">
+                            <input type="submit" value="Supprimer">
+                        </form>
+
+                    </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <form action="{{ path('produit_add') }}">
+            <p>Ajouter un Nouveau Produit dans la base</p>
+            <input type="submit" value="AJOUTER UN PRODUIT"/>
+        </form>
+    {% endif %}
+
+{% endblock %}

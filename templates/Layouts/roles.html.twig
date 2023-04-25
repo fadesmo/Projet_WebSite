@@ -1,0 +1,11 @@
+{% if app.user %}
+    {% if is_granted('ROLE_SUPERADMIN') %}
+        SUPER ADMIN
+    {% elseif is_granted('ROLE_ADMIN') %}
+        ADMIN
+    {% elseif is_granted('ROLE_CLIENT') %}
+        CLIENT
+    {% endif %}
+{% else %}
+    INCONNU
+{% endif %}

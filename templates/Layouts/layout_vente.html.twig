@@ -5,37 +5,33 @@
 
 {% block css %}
     {{ parent() }}
-    <link rel="stylesheet" media="screen" type="text/css" title="default" href="{{ asset('css/default.css') }}" />
 {% endblock %}
 
 {% block javascript %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/global.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/macros.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-    <div id="flash">
-        {% include 'Layouts/flash.html.twig' %}
+    <div id="header">
+        {% include 'Layouts/header.html.twig' %}
     </div>
 
     <div id="menu">
-
+        {% include 'Accueil/actions.html.twig' %}
     </div>
 
-    <div id="header">
-        {% include 'Layouts/header.html.twig' %}
+    <div id="flash">
+        {% include 'Layouts/flash.html.twig' %}
     </div>
 
     <div id="titre">
         <h1>{% block titre_principal %}Site de vente{% endblock %}</h1>
     </div>
 
-    <div id="vue">
+    <div id="vue" >
         {% block vue %}{% endblock %}
     </div>
 
-    <div id="footer">
+    <div id="footer" style="text-align: center">
         {% include 'Layouts/footer.html.twig' %}
     </div>
 {% endblock %}

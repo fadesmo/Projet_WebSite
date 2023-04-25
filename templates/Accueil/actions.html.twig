@@ -1,0 +1,32 @@
+{% if app.user %}
+    {% if is_granted('ROLE_SUPERADMIN') %}
+        <table class="menu-action">
+            <tr><td><a href="{{ path('store_accueil') }}">ACCUEIL</a></td></tr>
+            <tr><td><a href="{{ path('store_admins_list') }}">GERER LES ADMINS</a></td></tr>
+            <tr><td><a href="{{ path('security_logout') }}">DÉCONNEXION</a></td></tr>
+        </table>
+    {% elseif is_granted('ROLE_ADMIN') %}
+        <table class="menu-action">
+            <tr><td><a href="{{ path('store_accueil') }}">ACCUEIL</a></td></tr>
+            <tr><td><a href="{{ path('produit_list') }}">LISTE PRODUIT</a></td></tr>
+            <tr><td><a href="{{ path('panier') }}">VOTRE PANIER</a></td></tr>
+            <tr><td><a href="{{ path('store_clients_list') }}">GERER LES CLIENTS</a></td></tr>
+            <tr><td><a href="{{ path('store_modifie_profile') }}">MODIFIER PROFILE</a></td></tr>
+            <tr><td><a href="{{ path('security_logout') }}">DÉCONNEXION</a></td></tr>
+        </table>
+    {% elseif is_granted('ROLE_CLIENT') %}
+        <table class="menu-action">
+            <tr><td><a href="{{ path('store_accueil') }}">ACCUEIL</a></td></tr>
+            <tr><td><a href="{{ path('produit_list') }}">LISTE PRODUIT</a></td></tr>
+            <tr><td><a href="{{ path('panier') }}">VOTRE PANIER</a></td></tr>
+            <tr><td><a href="{{ path('store_modifie_profile') }}">MODIFIER PROFILE</a></td></tr>
+            <tr><td><a href="{{ path('security_logout') }}">DÉCONNEXION</a></td></tr>
+        </table>
+    {% endif %}
+{% else %}
+    <table class="menu-action">
+        <tr><td><a href="{{ path('store_accueil') }}">ACCUEIL</a></td></tr>
+    <tr><td><a href="{{ path('security_login') }}">Se Connecter</a></td></tr>
+    <tr><td><a href="{{ path('store_register') }}">S'inscrire</a></td></tr>
+    </table>
+{% endif %}
